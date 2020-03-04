@@ -5,8 +5,8 @@
    Tutorial 11
    Tutorial Case
 
-   Author: 
-   Date:   
+   Author: Isaiah Romo
+   Date:   3/2/20
 
    Global Variables
    ================
@@ -54,7 +54,65 @@
 	
 */
 
+//Run the init()function when the page loads
+window.onload = init;
+var puzzleCells;
+var cellBackground;
 
+function init(){
+   //insert the title for the first puzzle
+   document.getElementById("puzzleTitle").innerHTML = "Puzzle 1";
+
+   //Insert the HTML code for the first puzzle
+   document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle1Hint, puzzle2Rating, puzzle1);
+
+   //add event handlers for the puzzle
+   var puzzleButtons = document.getElementsByClassName("puzzles");
+   for(var i = 0; i < puzzleButtons.length; i++){
+      puzzleButtons[i].onclick = swapPuzzle;
+   }
+
+   setupPuzzle();
+}
+
+function setupPuzzle(){
+   //create a selector that will find every td in the table hanjie grid
+   puzzleCells = document.querySelectorAll("table#hanjieGrid td")
+
+   // set the initial color of every cell in the table to gold
+   for(var i = 0; i < puzzleCells.length; i++){
+      puzzleCells[i].style.backgroundColor = "rgb(233, 207, 29)"
+      // set the cell background color in response to the moyse down event
+      puzzleCells[i].onmousedown = setBackground;
+
+   }
+}
+
+function setBackground(e){
+   cellBackground = "rgb(101, 101, 101)";
+   e.target.style.backgroundColor = cellBackground;
+}
+
+function swapPuzzle(e){
+   var puzzleID = e.target.id;
+
+   var puzzleTitle = e.target.value;
+   document.getElementById("puzzleTitle").innerHTML  = puzzleTitle;
+
+   switch(puzzleID){
+      case "puzzle1":
+         document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle1Hint, puzzle1Rating, puzzle1);
+         break;
+      case "puzzle2":
+         document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle2Hint, puzzle2Rating, puzzle2);
+         break;
+      case "puzzle3":
+         document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle3Hint, puzzle3Rating, puzzle3);
+         break;
+   }
+
+   setupPuzzle();
+}
 
 
 
