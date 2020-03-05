@@ -73,6 +73,15 @@ function init(){
    }
 
    setupPuzzle();
+
+   document.addEventListener("mouseup", endBackground);
+}
+
+function endBackground(){
+   // remove teh event listener for every puzzle cell
+   for(var i = 0; i < puzzleCells.length; i++){
+      puzzleCells[i].removeEventListener("mouseenter", extendBackground);
+   }
 }
 
 function setupPuzzle(){
@@ -89,7 +98,27 @@ function setupPuzzle(){
 }
 
 function setBackground(e){
-   cellBackground = "rgb(101, 101, 101)";
+   // set the background based on the keyboard key being pressed
+   if(e.shiftKey){
+      cellBackground = "rgb (233, 207, 29)";
+   }else if(e.altKey){
+      cellBackground = "rgb (255, 255, 255)";
+   }else{
+      cellBackground = "rgb (101, 101, 101)";
+   }
+
+   e.target.style.backgroundColor = cellBackground;
+
+   // Create an event listener for every puzzle cell
+   for(var i = 0; i < puzzleCells.length; i++){
+      puzzleCells[i].addEventListener("mouseenter", extendBackground);
+   }
+
+   // prevent the default action of selecting table text
+   e.preventDefault();
+}
+
+function extendBackground(e){
    e.target.style.backgroundColor = cellBackground;
 }
 
